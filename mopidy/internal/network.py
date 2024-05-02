@@ -214,7 +214,7 @@ class Connection(object):
 
     def stop(self, reason, level=logging.DEBUG):
         if self.stopping:
-            logger.log(level, 'Already stopping: %s' % reason)
+            logger.log(level, 'Already stopping: %s', reason)
             return
         else:
             self.stopping = True
