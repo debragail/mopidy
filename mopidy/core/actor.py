@@ -150,7 +150,7 @@ class Core(
             if len(coverage):
                 self._load_state(coverage)
         except Exception as e:
-            logger.warn('Restore state: Unexpected error: %s', str(e))
+            logger.warning('Restore state: Unexpected error: %s', str(e))
 
     def teardown(self):
         """Do not call this function. It is for internal use at shutdown."""
@@ -159,7 +159,7 @@ class Core(
                 if self._config['core']['restore_state']:
                     self._save_state()
         except Exception as e:
-            logger.warn('Unexpected error while saving state: %s', str(e))
+            logger.warning('Unexpected error while saving state: %s', str(e))
 
     def _get_data_dir(self):
         # get or create data director for core
