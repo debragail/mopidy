@@ -1,13 +1,13 @@
 from __future__ import absolute_import, unicode_literals
 
 import logging
-import random
 
 from mopidy import exceptions
 from mopidy.core import listener
 from mopidy.internal import deprecation, validation
 from mopidy.internal.models import TracklistState
 from mopidy.models import TlTrack, Track
+import secrets
 
 logger = logging.getLogger(__name__)
 
@@ -127,7 +127,7 @@ class TracklistController(object):
             self._trigger_options_changed()
         if value:
             self._shuffled = self.get_tl_tracks()
-            random.shuffle(self._shuffled)
+            secrets.SystemRandom().shuffle(self._shuffled)
         return setattr(self, '_random', value)
 
     random = deprecation.deprecated_property(get_random, set_random)
@@ -312,7 +312,7 @@ class TracklistController(object):
             if self.get_repeat() or not tl_track:
                 logger.debug('Shuffling tracks')
                 self._shuffled = self._tl_tracks[:]
-                random.shuffle(self._shuffled)
+                secrets.SystemRandom().shuffle(self._shuffled)
 
         if self.get_random():
             if self._shuffled:
@@ -599,7 +599,7 @@ class TracklistController(object):
         before = tl_tracks[:start or 0]
         shuffled = tl_tracks[start:end]
         after = tl_tracks[end or len(tl_tracks):]
-        random.shuffle(shuffled)
+        secrets.SystemRandom().shuffle(shuffled)
         self._tl_tracks = before + shuffled + after
         self._increase_version()
 
@@ -640,7 +640,7 @@ class TracklistController(object):
     def _trigger_tracklist_changed(self):
         if self.get_random():
             self._shuffled = self._tl_tracks[:]
-            random.shuffle(self._shuffled)
+            secrets.SystemRandom().shuffle(self._shuffled)
         else:
             self._shuffled = []
 
